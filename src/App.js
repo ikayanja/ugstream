@@ -1,3 +1,4 @@
+   import './index.css';
    import React, { useState } from 'react';
    import { AppBar, Toolbar, Typography, Container, Grid, Card, CardContent, IconButton } from '@material-ui/core';
    import { PlayArrow, Pause } from '@material-ui/icons';
