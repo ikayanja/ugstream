@@ -99,16 +99,7 @@ const stations: Station[] = [
     url: 'https://player.connectuganda.com:8000/connect.mp3',
     logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/connect-kampala.png'
   },
-  { 
-    name: 'Bukedde FM', 
-    url: 'https://stream.hydeinnovations.com:2020/stream/bukeddefm/stream',
-    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/bukedde-fm-100-5.png'
-  },
-  { 
-    name: 'Yofochm Radio', 
-    url: 'https://api.instant.audio/data/streams/132/yofochm',
-    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/yofochm.png'
-  },
+  
 ]
 
 interface IconInputProps {
