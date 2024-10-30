@@ -16,7 +16,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { MenuIcon, PlayIcon, PauseIcon, HeartIcon, HomeIcon, RadioIcon, BookOpenIcon, VolumeIcon, Mic as RecordIcon, StopCircleIcon } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { MenuIcon, PlayIcon, PauseIcon, HeartIcon, HomeIcon, RadioIcon, BookOpenIcon, VolumeIcon, Mic as RecordIcon, StopCircleIcon, SkipBackIcon, SkipForwardIcon, XIcon } from 'lucide-react'
 
 interface Station {
   name: string
@@ -112,7 +113,6 @@ const stations: Station[] = [
     url: 'https://www.radiocity.ug/',
     logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/radiocity.png',
     country: 'Uganda',
-    recommended: true,
   },
   { 
     name: 'Radio Rupiny', 
@@ -146,6 +146,8 @@ export default function UgstreamApp() {
   const [audioFile, setAudioFile] = useState<File | null>(null)
   const [isRecording, setIsRecording] = useState<boolean>(false)
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null)
+  const [discoverTab, setDiscoverTab] = useState<string>('all')
+  const [showFullScreen, setShowFullScreen] = useState<boolean>(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
 
@@ -177,6 +179,7 @@ export default function UgstreamApp() {
         setPlaying(station.name)
         setLastPlayed(station.name)
         setBuffering(false)
+        setShowFullScreen(true)
       },
       onloaderror: () => setBuffering(false),
       onplayerror: () => setBuffering(false),
@@ -199,8 +202,6 @@ export default function UgstreamApp() {
     const file = event.target.files?.[0]
     if (file) {
       setAudioFile(file)
-      // Here you would typically process the EPUB file and convert it to audio
-      // For this example, we'll just pretend to play the file name
       if (sound) sound.unload()
       setPlaying(file.name)
       setLastPlayed(file.name)
@@ -237,10 +238,29 @@ export default function UgstreamApp() {
     }
   }
 
+  const changeStation = (direction: 'prev' | 'next') => {
+    const currentIndex = stations.findIndex(station => station.name === playing)
+    let newIndex: number
+
+    if (direction === 'prev') {
+      newIndex = currentIndex > 0 ? currentIndex - 1 : stations.length - 1
+    } else {
+      newIndex = currentIndex < stations.length - 1 ? currentIndex + 1 : 0
+    }
+
+    togglePlay(stations[newIndex])
+  }
+
   const renderDiscoverContent = () => {
     const filteredStations = stations.filter(station =>
       station.name.toLowerCase().includes(searchTerm)
     )
+
+    const stationsToDisplay = discoverTab === 'all' 
+      ? filteredStations 
+      : discoverTab === 'recommended'
+      ? filteredStations.filter(station => station.recommended)
+      : filteredStations.filter(station => station.country === discoverTab)
 
     return (
       <>
@@ -252,26 +272,31 @@ export default function UgstreamApp() {
             className="w-full"
           />
         </div>
-        <h2 className="text-xl font-bold mb-4">Recommended Stations</h2>
-        <ScrollArea className="h-[200px] mb-6">
-          <div className="space-y-4">
-            {filteredStations.filter(station => station.recommended).map((station) => (
-              <StationCard key={station.name} station={station} playing={playing} togglePlay={togglePlay} toggleFavorite={toggleFavorite} favorites={favorites} />
-            ))}
-          </div>
-        </ScrollArea>
-        {['Uganda', 'Kenya', 'Tanzania'].map((country) => (
-          <div key={country}>
-            <h2 className="text-xl font-bold mb-4">{country}</h2>
-            <ScrollArea className="h-[200px] mb-6">
+        <Tabs value={discoverTab} onValueChange={setDiscoverTab}>
+          <TabsList>
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="recommended">Recommended</TabsTrigger>
+            <TabsTrigger value="Uganda">Uganda</TabsTrigger>
+            <TabsTrigger value="Kenya">Kenya</TabsTrigger>
+            <TabsTrigger value="Tanzania">Tanzania</TabsTrigger>
+          </TabsList>
+          <TabsContent value={discoverTab}>
+            <ScrollArea className="h-[calc(100vh-300px)]">
               <div className="space-y-4">
-                {filteredStations.filter(station => station.country === country).map((station) => (
-                  <StationCard key={station.name} station={station} playing={playing} togglePlay={togglePlay} toggleFavorite={toggleFavorite} favorites={favorites} />
+                {stationsToDisplay.map((station) => (
+                  <StationCard 
+                    key={station.name} 
+                    station={station} 
+                    playing={playing} 
+                    togglePlay={togglePlay} 
+                    toggleFavorite={toggleFavorite} 
+                    favorites={favorites} 
+                  />
                 ))}
               </div>
             </ScrollArea>
-          </div>
-        ))}
+          </TabsContent>
+        </Tabs>
       </>
     )
   }
@@ -288,17 +313,20 @@ export default function UgstreamApp() {
             </Avatar>
             <h2 className="text-2xl font-bold mb-4">{currentStation.name}</h2>
             <div className="flex items-center space-x-4 mb-8">
+              <Button variant="ghost" size="icon" onClick={() => changeStation('prev')}>
+                <SkipBackIcon className="h-8 w-8" />
+              </Button>
               <Button variant="ghost" size="icon" onClick={() => sound?.pause()}>
                 <PauseIcon className="h-8 w-8" />
               </Button>
               <Button variant="ghost" size="icon" onClick={() => sound?.play()}>
                 <PlayIcon className="h-8 w-8" />
               </Button>
-              <Button variant="ghost" size="icon" onClick={toggleRecording}>
-                {isRecording ? <StopCircleIcon className="h-8 w-8 text-red-500" /> : <RecordIcon className="h-8 w-8" />}
+              <Button variant="ghost" size="icon" onClick={() => changeStation('next')}>
+                <SkipForwardIcon className="h-8 w-8" />
               </Button>
             </div>
-            <div className="flex items-center space-x-2 w-full max-w-md">
+            <div className="flex items-center space-x-2 w-full max-w-md mb-4">
               <VolumeIcon className="h-4 w-4" />
               <Slider
                 value={[volume * 100]}
@@ -307,6 +335,9 @@ export default function UgstreamApp() {
                 step={1}
               />
             </div>
+            <Button variant="ghost" size="icon" onClick={toggleRecording}>
+              {isRecording ? <StopCircleIcon className="h-8 w-8 text-red-500" /> : <RecordIcon className="h-8 w-8" />}
+            </Button>
             {recordedBlob && (
               <div className="mt-4">
                 <audio src={URL.createObjectURL(recordedBlob)} controls />
@@ -401,7 +432,7 @@ export default function UgstreamApp() {
         {renderContent()}
       </main>
 
-      <nav className="bg-primary text-primary-foreground p-4">
+      <nav className="bg-primary text-primary-foreground p-4 fixed bottom-0 left-0 right-0">
         <div className="flex justify-around">
           <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
             <HomeIcon className="h-6 w-6" />
@@ -416,7 +447,22 @@ export default function UgstreamApp() {
             <span className="sr-only">Audiobooks</span>
           </Button>
         </div>
+      
       </nav>
+
+      {showFullScreen && (
+        <div className="fixed inset-0 bg-background z-50 flex flex-col items-center justify-center">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4"
+            onClick={() => setShowFullScreen(false)}
+          >
+            <XIcon className="h-6 w-6" />
+          </Button>
+          {renderNowPlayingContent()}
+        </div>
+      )}
     </div>
   )
 }
