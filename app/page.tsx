@@ -53,7 +53,85 @@ const stations: Station[] = [
     logo: 'https://cdn.instant.audio/images/logos/radio-co-tz/tbc-taifa.png',
     country: 'Tanzania'
   },
-  // Add more stations here...
+  { 
+    name: 'X FM', 
+    url: 'https://radioonefm90.co.ug:8000/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/xfm.png',
+    country: 'Uganda'
+  },
+  { 
+    name: 'Dembe FM', 
+    url: 'https://radioonefm90.co.ug:8000/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/dembe-fm.png',
+    country: 'Uganda'
+  },
+  { 
+    name: 'Galaxy FM', 
+    url: 'https://radioonefm90.co.ug:8000/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/100-2-galaxy-fm.png',
+    country: 'Uganda'
+  },
+  { 
+    name: 'Radio CBS EyObujjajja', 
+    url: 'https://s5.voscast.com:9909/EYOBUJJAJJA',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/cbs-buganda.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Radio CBS Emmanduso', 
+    url: 'https://s5.voscast.com:9905/EMMANDUSO',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/cbs-buganda.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Akaboozi 2', 
+    url: 'http://162.244.80.52:8732/;stream.mp3',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/akaboozi-fm.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Radio Simba', 
+    url: 'https://www.radiosimba.ug:8000/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/simba.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Radio Pacis (Arua)', 
+    url: 'https://radiopacisuganda.radioca.st/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/pacis.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'K FM', 
+    url: 'https://www.kfm.co.ug/?radio_player_play=http%3A%2F%2Fradio.kfm.co.ug%3A8000%2Fstream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/kfm.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Radio City', 
+    url: 'https://www.radiocity.ug/',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/radiocity.png',
+    country: 'Uganda',
+    recommended: true,
+  },
+  { 
+    name: 'Radio Rupiny', 
+    url: 'https://stream.hydeinnovations.com:2020/stream/rupiny/stream',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/rupiny.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Pearl Radio', 
+    url: 'https://dc4.serverse.com/proxy/pearlfm/stream/1/',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/pearl-107-9.png',
+    country: 'Uganda',
+  },
+  { 
+    name: 'Connect Uganda Radio', 
+    url: 'https://player.connectuganda.com:8000/connect.mp3',
+    logo: 'https://cdn.instant.audio/images/logos/radio-co-ug/connect-kampala.png',
+    country: 'Uganda'
+  },
 ]
 
 export default function UgstreamApp() {
