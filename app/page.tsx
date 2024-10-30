@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { MenuIcon, SearchIcon, PlayIcon, PauseIcon, SkipForwardIcon, SkipBackIcon, HeartIcon, HomeIcon, StarIcon, CoffeeIcon, RadioIcon, BookOpenIcon, VolumeIcon, Mic as RecordIcon, StopCircleIcon } from 'lucide-react'
+import { MenuIcon, PlayIcon, PauseIcon, HeartIcon, HomeIcon, RadioIcon, BookOpenIcon, VolumeIcon, Mic as RecordIcon, StopCircleIcon } from 'lucide-react'
 
 interface Station {
   name: string
@@ -323,7 +323,7 @@ export default function UgstreamApp() {
             )}
           </>
         ) : (
-          <p>No station is currently playing or was last played</p>
+          <p>No station is currently playing</p>
         )}
       </div>
     )
