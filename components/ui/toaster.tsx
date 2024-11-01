@@ -1,9 +1,6 @@
-// /components/ui/toaster.tsx
-
 "use client";
 
-import { useToast } from "@/components/hooks/use-toast";
-
+import { useToast, Toast as ToastType } from "@/components/hooks/use-toast"
 import {
   Toast,
   ToastClose,
@@ -13,23 +10,16 @@ import {
   ToastViewport,
 } from "@/components/ui/toast";
 
-interface ToastProps {
-  id: string;
-  title?: string;
-  description?: string;
-  [key: string]: any;
-}
-
 export function Toaster() {
   const { toasts } = useToast();
 
   return (
     <ToastProvider>
-      {toasts.map(({ id, title, description, ...props }: ToastProps) => (
-        <Toast key={id} {...props}>
+      {toasts.map((toast: ToastType) => (
+        <Toast key={toast.id} {...toast}>
           <div className="grid gap-1">
-            {title && <ToastTitle>{title}</ToastTitle>}
-            {description && <ToastDescription>{description}</ToastDescription>}
+            {toast.title && <ToastTitle>{toast.title}</ToastTitle>}
+            {toast.description && <ToastDescription>{toast.description}</ToastDescription>}
           </div>
           <ToastClose />
         </Toast>
@@ -37,4 +27,18 @@ export function Toaster() {
       <ToastViewport />
     </ToastProvider>
   );
+}
+
+export function MyComponent() {
+  const { addToast } = useToast()
+
+  const handleClick = () => {
+    addToast({
+      title: "Toast Title",
+      description: "This is a toast message",
+      duration: 3000, // Optional: duration in milliseconds
+    })
+  }
+
+  return <button onClick={handleClick}>Show Toast</button>
 }

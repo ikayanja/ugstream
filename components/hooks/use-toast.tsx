@@ -1,5 +1,3 @@
-// /components/hooks/use-toast.ts
-
 import { useState } from 'react'
 
 export interface Toast {
@@ -9,7 +7,13 @@ export interface Toast {
   duration?: number
 }
 
-export function useToast() {
+export interface UseToastReturn {
+  addToast: (toast: Omit<Toast, 'id'>) => void
+  removeToast: (id: string) => void
+  toasts: Toast[]
+}
+
+export function useToast(): UseToastReturn {
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const addToast = (toast: Omit<Toast, 'id'>) => {
