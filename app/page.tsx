@@ -397,33 +397,30 @@ export default function UgstreamApp() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="bg-primary text-primary-foreground p-4 flex justify-between items-center">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <SheetHeader>
-              <SheetTitle>Menu</SheetTitle>
-              <SheetDescription>
-                Navigate through different sections of the app.
-              </SheetDescription>
-            </SheetHeader>
-            <div className="grid gap-4 py-4">
-              <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
-                <HomeIcon className="mr-2 h-4 w-4" /> Discover
-              </Button>
-              <Button variant="ghost" onClick={() => setCurrentPage('nowPlaying')}>
-                <RadioIcon className="mr-2 h-4 w-4" /> Now Playing
-              </Button>
-              <Button variant="ghost" onClick={() => setCurrentPage('audiobooks')}>
-                <BookOpenIcon className="mr-2 h-4 w-4" /> Audiobooks
-              </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
+  <Sheet>
+       <SheetTrigger asChild>
+         <Button variant="ghost" size="icon">
+         <MenuIcon className="h-6 w-6" />
+         <span className="sr-only">Open menu</span>
+         </Button>
+       </SheetTrigger>
+       <SheetContent side="left" className="bg-black bg-opacity-75 p-4">
+       <SheetHeader>
+         <SheetTitle>Menu</SheetTitle>
+       </SheetHeader>
+    <div className="grid gap-4 py-4">
+      <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
+        <HomeIcon className="mr-2 h-4 w-4" /> Discover
+      </Button>
+      <Button variant="ghost" onClick={() => setCurrentPage('nowPlaying')}>
+        <RadioIcon className="mr-2 h-4 w-4" /> Now Playing
+      </Button>
+      <Button variant="ghost" onClick={() => setCurrentPage('audiobooks')}>
+        <BookOpenIcon className="mr-2 h-4 w-4" /> Audiobooks
+      </Button>
+      </div>
+     </SheetContent>
+  </Sheet>
         <h1 className="text-xl font-bold">ugstream</h1>
         <div className="w-6" /> {/* Spacer for centering */}
       </header>
