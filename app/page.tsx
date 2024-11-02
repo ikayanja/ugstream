@@ -429,23 +429,22 @@ export default function UgstreamApp() {
         {renderContent()}
       </main>
 
-      <nav className="bg-primary text-primary-foreground p-4 fixed bottom-0 left-0 right-0">
-        <div className="flex justify-around">
-          <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
-            <HomeIcon className="h-6 w-6" />
-            <span className="sr-only">Discover</span>
-          </Button>
-          <Button variant="ghost" onClick={() => setCurrentPage('nowPlaying')}>
-            <RadioIcon className="h-6 w-6" />
-            <span className="sr-only">Now Playing</span>
-          </Button>
-          <Button variant="ghost" onClick={() => setCurrentPage('audiobooks')}>
-            <BookOpenIcon className="h-6 w-6" />
-            <span className="sr-only">Audiobooks</span>
-          </Button>
+    <nav className="bg-black bg-opacity-75 text-primary-foreground p-4 fixed bottom-0 left-0 right-0 rounded-t-lg">
+          <div className="flex justify-around">
+        <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
+          <HomeIcon className="h-6 w-6" />
+          <span className="sr-only">Discover</span>
+        </Button>
+        <Button variant="ghost" onClick={() => setCurrentPage('nowPlaying')}>
+         <RadioIcon className="h-6 w-6" />
+          <span className="sr-only">Now Playing</span>
+        </Button>
+        <Button variant="ghost" onClick={() => setCurrentPage('audiobooks')}>
+          <BookOpenIcon className="h-6 w-6" />
+           <span className="sr-only">Audiobooks</span>
+        </Button>
         </div>
-      
-      </nav>
+    </nav>
 
       {showFullScreen && (
         <div className="fixed inset-0 bg-background z-50 flex flex-col items-center justify-center">
