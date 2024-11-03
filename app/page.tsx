@@ -404,7 +404,7 @@ export default function UgstreamApp() {
          <span className="sr-only">Open menu</span>
          </Button>
        </SheetTrigger>
-       <SheetContent side="left" className="bg-black bg-opacity-75 p-4">
+       <SheetContent side="left" className="bg-black bg-opacity-90 p-4">
        <SheetHeader>
          <SheetTitle>Menu</SheetTitle>
        </SheetHeader>
@@ -429,7 +429,7 @@ export default function UgstreamApp() {
         {renderContent()}
       </main>
 
-    <nav className="bg-black bg-opacity-75 text-primary-foreground p-4 fixed bottom-0 left-0 right-0 rounded-t-lg">
+    <nav className="bg-black bg-opacity-90 text-primary-foreground p-4 fixed bottom-0 left-0 right-0 rounded-t-lg">
           <div className="flex justify-around">
         <Button variant="ghost" onClick={() => setCurrentPage('discover')}>
           <HomeIcon className="h-6 w-6" />
