@@ -326,15 +326,17 @@ export default function UgstreamApp() {
                 <SkipForwardIcon className="h-8 w-8" />
               </Button>
             </div>
-            <div className="flex items-center space-x-2 w-full max-w-md mb-4">
-              <VolumeIcon className="h-4 w-4" />
-              <Slider
-                value={[volume * 100]}
-                onValueChange={(value) => setVolume(value[0] / 100)}
-                max={100}
-                step={1}
-              />
-            </div>
+            <div className="flex items-center space-x-2 w-1/2 mb-4 bg-white p-2 rounded">
+                 <VolumeIcon className="h-4 w-2 text-gray-800" />
+                  <Slider
+                    value={[volume * 100]}
+                    onValueChange={(value) => setVolume(value[0] / 100)}
+                    max={100}
+                    step={1}
+                    className="flex-grow text-gray-800"
+                  />
+              </div>
+
             <Button variant="ghost" size="icon" onClick={toggleRecording}>
               {isRecording ? <StopCircleIcon className="h-8 w-8 text-red-500" /> : <RecordIcon className="h-8 w-8" />}
             </Button>
