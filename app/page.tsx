@@ -447,18 +447,22 @@ export default function UgstreamApp() {
     </nav>
 
     {showFullScreen && (
-          <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
-             <Button 
-                variant="ghost" 
-                size="icon" 
-               className="absolute top-4 right-4"
-                onClick={() => setShowFullScreen(false)}
-                                  >
-                   <XIcon className="h-6 w-6" />
-              </Button>
-                {renderNowPlayingContent()}
-          </div>
-         )}
+  <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+    <Card className="p-6 w-3/4 max-w-lg bg-gray-900 text-white rounded-lg shadow-lg">
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        className="absolute top-4 right-4 text-white"
+        onClick={() => setShowFullScreen(false)}
+      >
+        <XIcon className="h-6 w-6" />
+      </Button>
+      {renderNowPlayingContent()}
+    </Card>
+  </div>
+)}
+
+
        </div>
   )
 }
