@@ -446,20 +446,20 @@ export default function UgstreamApp() {
         </div>
     </nav>
 
-      {showFullScreen && (
-        <div className="fixed inset-0 bg-background z-50 flex flex-col items-center justify-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="absolute top-4 right-4"
-            onClick={() => setShowFullScreen(false)}
-          >
-            <XIcon className="h-6 w-6" />
-          </Button>
-          {renderNowPlayingContent()}
-        </div>
-      )}
-    </div>
+    {showFullScreen && (
+          <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
+             <Button 
+                variant="ghost" 
+                size="icon" 
+               className="absolute top-4 right-4"
+                onClick={() => setShowFullScreen(false)}
+                                  >
+                   <XIcon className="h-6 w-6" />
+              </Button>
+                {renderNowPlayingContent()}
+          </div>
+         )}
+       </div>
   )
 }
 
