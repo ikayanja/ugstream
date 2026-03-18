@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useMemo, useState } from "react";
 import {
   Image,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -15,6 +16,10 @@ import {
 import { radioStations } from "./shared/data/radio-stations";
 
 type DiscoverTab = "all" | "favourites";
+type InstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+};
 
 const FILTERS: DiscoverTab[] = [
   "all",
@@ -44,6 +49,8 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
+  const [installDismissed, setInstallDismissed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<DiscoverTab>("all");
   const [favoriteIds, setFavoriteIds] = useState<string[]>([
@@ -66,6 +73,29 @@ export default function App() {
       }
     };
   }, [sound]);
+
+  useEffect(() => {
+    if (Platform.OS !== "web") return;
+
+    const onBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as InstallPromptEvent);
+      setInstallDismissed(false);
+    };
+
+    const onAppInstalled = () => {
+      setInstallPrompt(null);
+      setInstallDismissed(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    window.addEventListener("appinstalled", onAppInstalled);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", onAppInstalled);
+    };
+  }, []);
 
   const filteredStations = useMemo(() => {
     const lowerSearch = searchTerm.trim().toLowerCase();
@@ -149,6 +179,16 @@ export default function App() {
     const targetId = currentStationId ?? favoriteIds[0] ?? filteredStations[0]?.id ?? radioStations[0]?.id;
     if (targetId) {
       void playStation(targetId);
+    }
+  };
+
+  const triggerInstall = async () => {
+    if (!installPrompt) return;
+
+    await installPrompt.prompt();
+    const choice = await installPrompt.userChoice;
+    if (choice.outcome === "accepted") {
+      setInstallPrompt(null);
     }
   };
 
@@ -240,7 +280,28 @@ export default function App() {
               );
             })}
           </View>
+        </ScrollView>
 
+        {Platform.OS === "web" && installPrompt && !installDismissed ? (
+          <View style={styles.installDock}>
+            <View style={styles.installCard}>
+              <View style={styles.installCopy}>
+                <Text style={styles.installTitle}>Download UGSTREAM</Text>
+                <Text style={styles.installText}>Save it to your device for quicker access anytime.</Text>
+              </View>
+              <View style={styles.installActions}>
+                <Pressable onPress={() => setInstallDismissed(true)} style={styles.installGhostButton}>
+                  <Text style={styles.installGhostText}>Later</Text>
+                </Pressable>
+                <Pressable onPress={() => void triggerInstall()} style={styles.installButton}>
+                  <Text style={styles.installButtonText}>Download App</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        ) : null}
+
+        <View style={styles.playerDock}>
           <View style={styles.playerCard}>
             <View style={styles.playerCopy}>
               <Text style={styles.playerLabel}>Now playing</Text>
@@ -263,7 +324,7 @@ export default function App() {
               </Pressable>
             </View>
           </View>
-        </ScrollView>
+        </View>
 
         <View style={styles.footer}>
           <Pressable style={styles.primaryButton} onPress={startListening}>
@@ -310,7 +371,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 24,
     paddingTop: 8,
-    paddingBottom: 180,
+    paddingBottom: 420,
   },
   topBar: {
     alignItems: "center",
@@ -463,8 +524,68 @@ const styles = StyleSheet.create({
     color: "#8a1f1f",
     marginTop: 3,
   },
+  installDock: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 264,
+    paddingHorizontal: 24,
+  },
+  installCard: {
+    borderRadius: 24,
+    backgroundColor: COLORS.ink,
+    padding: 18,
+    gap: 14,
+  },
+  installCopy: {
+    gap: 4,
+  },
+  installTitle: {
+    color: COLORS.buttonText,
+    fontSize: 16,
+    fontWeight: "800",
+  },
+  installText: {
+    color: "rgba(255,255,255,0.72)",
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  installActions: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  installGhostButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 999,
+    backgroundColor: "rgba(255,255,255,0.08)",
+  },
+  installGhostText: {
+    color: COLORS.buttonText,
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  installButton: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 999,
+    backgroundColor: COLORS.bg,
+    alignItems: "center",
+  },
+  installButtonText: {
+    color: COLORS.ink,
+    fontSize: 13,
+    fontWeight: "800",
+  },
+  playerDock: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 118,
+    paddingHorizontal: 24,
+  },
   playerCard: {
-    marginTop: 26,
     borderRadius: 30,
     backgroundColor: COLORS.card,
     padding: 22,
