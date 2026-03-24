@@ -130,32 +130,20 @@ export const radioStations: RadioStation[] = [
  {
     id: "smart-fm",
     name: "89 SMART FM",
-    streamUrl: "https://static-media.streema.com/media/cache/fb/4f/fb4f3ced8e778b4a7e1a52ca2a4faa28.jpg",
-    logoUrl: "https://streema.com/radios/NBS_89Smart_FM#",
+    streamUrl: "http://p.radios.streema.com/radios/play/NBS_89Smart_FM",
+    logoUrl: "https://static-media.streema.com/media/cache/fb/4f/fb4f3ced8e778b4a7e1a52ca2a4faa28.jpg",
  },
  {
     id: "open-gate-fm-mbale",
     name: "Open Gate FM Mbale",
     streamUrl: "http://139.162.195.139:8010/radio.mp3?n=205552be3d7968b1e99d",
-    logoUrl: "https://streema.com/radios/97.7_Record_FM#",
+    logoUrl: "https://static-media.streema.com/media/cache/b6/7c/b67c21d5dcec472a4fabd75bdf8a4ce6.jpg",
  },
  {
     id: "record-fm-97-7",
     name: "97.7 Record FM",
     streamUrl: "https://eu1.reliastream.com/proxy/recordfm977?mp=/stream.mp3/;",
-    logoUrl: "https://radio.menu/images/1/recordradio-co-ug-97-7-record-fm/webp/",
- },
- {//
-    id: "krc-102-fm",
-    name: "KRC 102 FM",
-    streamUrl: "https://stream.zeno.fm/y7bqwfryxdovv?n=bf73aa861076b9e2e05b",
-    logoUrl: "https://radio.menu/images/1/krcfm-com-krc-102-fm/webp/",
- },
- {//
-    id: "voice-of-kyankwanzi-89-7",
-    name: "89.7 FM Voice of Kyankwanzi",
-    streamUrl: "https://stream.zeno.fm/eyzf4ddwqcmvv?n=d7718804b7fb568e6495",
-    logoUrl: "https://radio.menu/images/1/zeno-fm-89-7-fm-voice-of-kyankwanzi/webp/",
+    logoUrl: "https://static-media.streema.com/media/cache/cc/de/ccdec1cd3c23edc0b795406671ece99a.png",
  },
  {
     id: "akaboozi-fm",
